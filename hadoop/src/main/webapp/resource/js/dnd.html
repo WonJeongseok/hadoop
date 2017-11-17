@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	
+	#drop-zone{
+		width:840px;
+		height:680px;
+		border:1px solid red;
+	}
+	
+</style>
+<script>
+	window.addEventListener("load", function(event){
+		
+		var dropZone = document.querySelector("#drop-zone");
+		
+		dropZone.addEventListener("dragenter", function(e){
+			/* e.stopPropagation();
+			e.preventDefault(); */
+			
+			//dropZone.style.background="pink";
+			e.target.style.background="pink";
+			
+			console.log("enter");
+		});
+		
+		dropZone.addEventListener("dragover", function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			
+			console.log("over");
+		});
+		
+		dropZone.addEventListener("dragleave", function(e){
+			/* e.stopPropagation();
+			e.preventDefault(); */
+			
+			//dropZone.style.background="white";
+			e.target.style.background="white";
+			
+			console.log("leave");
+		});
+		
+		dropZone.addEventListener("drop", function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			
+			dropZone.style.background="white";
+			
+			console.log("drop");
+		});
+		
+	});
+</script>
+</head>
+<body>
+	<div id="drop-zone">
+		<strong>Drag here!!</strong></br>
+		<b>Drag here!!!</b>
+	</div>
+</body>
+</html>

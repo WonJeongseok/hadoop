@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+
+#board {
+	width: 500px;
+	height: 400px;
+	background: purple;
+	position: relative;
+	overflow: hidden;
+}
+
+.card {
+	font: 35px;
+	text-align: center;
+	line-height: 100px;
+	width: 100px;
+	height: 100px;
+	background: pink;
+	position: absolute;
+	text-align: center;
+	line-height: 100px;
+	line-height: 100px;
+	
+	cursor:move;
+}
+
+</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script type="text/javascript">
+	
+	/* $( function(event){
+		
+		var locations = [
+			{left:"400px", top:"0px"},
+			{left:"400px", top:"150px"},
+			{left:"400px", top:"300px"},
+			{left:"250px", top:"400px"},
+			{left:"0px", top:"400px"},
+			{left:"200px", top:"200px"}
+		];
+		
+		var cards = $(".card");
+		
+		cards.draggable();
+		
+		for( var i=0; i<cards.length; i++)
+			cards
+			.eq(i)
+			.delay(100*i)
+			.animate(locations[i]);
+		
+		var rotateButton = $("#rotate-Button");
+		
+		rotateButton.click( function(e){
+			
+			var temp = location[0];
+			location[1] = location[2];
+			location[2] = location[3];
+			location[3] = location[4];
+			location[4] = location[5];
+			location[5] = temp
+			
+			for( var i=0; i<cards.length; i++ )
+				cards
+				.eq(i)
+				.delay(100*i)
+				.animate(locations[i]);
+			
+			//alert("Test");
+		});		
+	}); */
+
+	window.addEventListener("load", function(event) {
+		var board = document.querySelector("#board");
+		var cards = document.querySelectorAll("#board .card");
+		var selected = null;
+		//var obj = { x:0, y:0 };
+		var selectedx = 0;
+		var selectedy = 0;
+
+		//$("#board .card").draggable();
+
+		document.onmousedown = function(e) {
+			if (e.target.classList.contains("card")){
+				selected = e.target;
+				/* obj[0] = e.offsetX;
+				obj[1] = e.offsetY; */
+				
+				selectedx = e.offsetX;
+				selectedy = e.offsetY;
+			}
+		};
+
+		 document.onmousemove = function(e) {
+ 			e.preventDefault();
+			/* console.log("e.movementx :" + e.movementX +"	e.movementy : " + e.movementY);
+			console.log("e.pagex :" + e.pageX +"	e.pagey : " + e.pageY); */
+			/* console.log("e.screenx :" + e.screenX +"	e.screeny : " + e.screenY);
+			console.log("e.clientx :" + e.clientX +"	e.clienty : " + e.clientY);
+			console.log("e.offsetx :" + e.offsetX +"	e.offsety : " + e.offsetY);
+			console.log("e.x :" + e.x +"	e.y : " + e.y); */
+			//alert("tt");obj[1] = e.offsetY;
+			if (selected == null)
+				return;
+
+			/* selected.style.left = e.clientX - board.offsetLeft - obj[0] + "px";
+			selected.style.top = e.clientY - board.offsetTop - obj[1] + "px"; */
+			
+			selected.style.left = e.clientX - board.offsetLeft - selectedx + "px";
+			selected.style.top = e.clientY - board.offsetTop - selectedy + "px";
+		};
+
+		document.onmouseup = function(e) {
+			selected = null;
+			/* obj[0] = 0;
+			obj[1] = 0; */
+			
+			selectedx = 0;
+			selectedy = 0;
+		};
+
+	});
+	
+	/* $( function() {
+	    $( "#datepicker" ).datepicker();
+	  } ); */
+</script>
+</head>
+<body>
+	<!-- <p>Date: <input type="text" id="datepicker"></p> -->
+	
+	<div>
+		<input id="rotate-Button" type="button" value="회전하기" />
+	</div>
+	<div id="board">
+		<div class="card">1</div>
+		<div class="card">2</div>
+		<div class="card">3</div>
+		<div class="card">4</div>
+		<div class="card">5</div>
+		<div class="card">6</div>
+	</div>
+</body>
+</html>
