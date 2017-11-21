@@ -61,7 +61,7 @@
 				
 			var isValidate = e.dataTransfer
 			 				 && e.dataTransfer.types
-			 				 e.dataTransfer.types[0].indexOf("Files");
+			 				 && e.dataTransfer.types[0].indexOf("Files");
 				
 			if(!isValidate){
 				alert("파일 형식이 올바르지 않습니다.");
@@ -84,14 +84,28 @@
 			//	String ***
 		 	// key=value&key=value&key=value
 		 	
-		 	var formData = new FormData();
-			/* for(var key in files)
+		 	var formData = new FormData();			//	서버전송을 위한 객체
+		 	formData.append("file",files[0]);
+		 	
+		 	var xhr = new XmlHttpRequest();
+		 	
+		 	//	진행상황표시
+		 	xhr.upload.addEventListener("progress", function(evt){
+		 	
+		 	})
+		 	xhr.addEventListener("load", function(evt){
+		 				 		
+		 	});
+		 	
+		 	xhr.open("POST", "url");
+		 	xhr.send(formData);
+			//for(var key in files)
 				
 			//	FormData ***
 			// ---------------------------
 			//	filesize : ..
 			//	filename : ...
-			// 	body : 01010111101010111010010100101 */
+			// 	body : 01010111101010111010010100101
 		});
 	});
 		
