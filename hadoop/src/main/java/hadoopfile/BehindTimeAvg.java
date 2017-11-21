@@ -21,6 +21,7 @@ public class BehindTimeAvg {	// 필요에 의해 data의 분석( 평균, 합계 
 	private static class BehindTimeMapper extends Mapper<Object, Text, Text, FloatWritable>{
 		
 		//	Writable : 인터페이스 - DataInput,DataOutput을 Serialize(직렬화) 하기위해 필요한 객체 (커스텀도 가능하다)
+		//	Text	 : Serialize( 직렬화 ) 기능이 있는 문자열
 		private FloatWritable timeWritable = new FloatWritable();
 		private Text idWritable = new Text();
 		
@@ -49,14 +50,15 @@ public class BehindTimeAvg {	// 필요에 의해 data의 분석( 평균, 합계 
 		private float countTotal = 0;			//	반전체평균을 구하기 위한 카운트
 		
 		private FloatWritable avgWritable = new FloatWritable();
+		//private Text text = new Text();
 		
 		//	작업하기전에 호출된다
-		@Override
+		/*@Override
 		protected void setup(Reducer<Text, FloatWritable, Text, FloatWritable>.Context context)
 				throws IOException, InterruptedException {
 			
 			super.setup(context);
-		}
+		}*/
 		
 		@Override 
 		protected void reduce(Text key, Iterable<FloatWritable> times,
@@ -86,10 +88,14 @@ public class BehindTimeAvg {	// 필요에 의해 data의 분석( 평균, 합계 
 			
 			FloatWritable avgTotalWritable = new FloatWritable(avgTotal / countTotal);
 			Text key = new Text("total");
+		
+			/*avgWritable.set(avgTotal / countTotal);
+			text.set("total");*/
 			context.write(key, avgTotalWritable);
+			//context.write( text, avgWritable);
 		}
 	}
-	
+
 	public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException  {
 		
 		Configuration conf = new Configuration();
@@ -97,7 +103,7 @@ public class BehindTimeAvg {	// 필요에 의해 data의 분석( 평균, 합계 
 		
 		job.setJarByClass(BehindTimeAvg.class);							// 	실행클래스
 		job.setMapperClass(BehindTimeMapper.class);						//	매퍼클래스
-		job.setCombinerClass(AvgReducer.class);							//	Merge & sort를 하기전에 리듀싱을 하는게 더 효율적일때가 있다.
+		//job.setCombinerClass(AvgReducer.class);							//	Merge & sort를 하기전에 리듀싱을 하는게 더 효율적일때가 있다.
 																		//	버그가 있을 수 있지만 버그가 없다는게 확실한 상황이면 사용하는게 좋다.
 																		//	마지막 리듀싱을 하기 전에 중간결과를 보고싶을때 리듀싱을 해주는게 컴바이너이다.
 
